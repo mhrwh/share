@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrapカテゴリー選択ドロップダウン</title>
+    <!-- Bootstrap CSSをインクルード -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>カテゴリー選択ドロップダウン</h2>
+        <div class="form-group">
+            <label for="categoryDropdown">カテゴリーを選択してください</label>
+            <select class="form-control" id="categoryDropdown" onchange="filterByCategory()">
+                <option value="all">すべてのカテゴリー</option>
+                <option value="category1">カテゴリー1</option>
+                <option value="category2">カテゴリー2</option>
+                <option value="category3">カテゴリー3</option>
+            </select>
+        </div>
+        <table class="table table-striped" id="dataTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>カテゴリー</th>
+                    <th>説明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>カテゴリー1</td>
+                    <td>カテゴリー1の説明</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>カテゴリー2</td>
+                    <td>カテゴリー2の説明</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>カテゴリー3</td>
+                    <td>カテゴリー3の説明</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JSと依存するPopper.js、jQueryをインクルード -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function filterByCategory() {
+            const categoryDropdown = document.getElementById("categoryDropdown");
+            const selectedCategory = categoryDropdown.value;
+            const dataTable = document.getElementById("dataTable");
+            const rows = dataTable.getElementsByTagName("tr");
+
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                const categoryCell = row.getElementsByTagName("td")[1];
+                const category = categoryCell.textContent;
+
+                if (selectedCategory === "all" || category === selectedCategory) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
