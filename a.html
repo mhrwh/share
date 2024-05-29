@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap表のソート機能</title>
+    <!-- Bootstrap CSSをインクルード -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        th {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>IDとカテゴリーの表</h2>
+        <table class="table table-striped table-bordered" id="sortableTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" onclick="sortTable()">ID</th>
+                    <th scope="col">カテゴリー</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>カテゴリA</td>
+                </tr>
+                <tr>
+                    <td>A</td>
+                    <td>カテゴリB</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>カテゴリC</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JSと依存するPopper.js、jQueryをインクルード -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        let originalOrder = [];
+        let isOriginalOrder = true;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const rows = document.querySelectorAll("#sortableTable tbody tr");
+            rows.forEach(row => originalOrder.push(row));
+        });
+
+        function sortTable() {
+            const table = document.getElementById("sortableTable");
+            const tbody = table.tBodies[0];
+
+            if (isOriginalOrder) {
+                // 反転順序
+                [...originalOrder].reverse().forEach(row => tbody.appendChild(row));
+            } else {
+                // 元の順序
+                originalOrder.forEach(row => tbody.appendChild(row));
+            }
+
+            // 順序を切り替え
+            isOriginalOrder = !isOriginalOrder;
+        }
+    </script>
+</body>
+</html>
