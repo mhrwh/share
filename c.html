@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>テキストをコピーするボタン</title>
+    <!-- Bootstrap CSSをインクルード -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .copy-container {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .copy-text {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>テキストをコピーするボタン</h2>
+        <div class="copy-container">
+            <input type="text" class="form-control copy-text" id="textToCopy" value="コピーするテキスト">
+            <button class="btn btn-primary" onclick="copyText()">コピー</button>
+        </div>
+        <div id="copyMessage" style="margin-top: 10px;"></div>
+    </div>
+
+    <!-- Bootstrap JSと依存するPopper.js、jQueryをインクルード -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function copyText() {
+            const textToCopy = document.getElementById("textToCopy");
+            textToCopy.select();
+            textToCopy.setSelectionRange(0, 99999); // モバイル対応
+            document.execCommand("copy");
+            const copyMessage = document.getElementById("copyMessage");
+            copyMessage.textContent = "テキストがコピーされました！";
+        }
+    </script>
+</body>
+</html>
