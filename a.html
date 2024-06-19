@@ -1,72 +1,54 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap表のソート機能</title>
-    <!-- Bootstrap CSSをインクルード -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        th {
-            cursor: pointer;
-        }
-    </style>
+    <title>JWT Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
 </head>
 <body>
-    <div class="container mt-5">
-        <h2>IDとカテゴリーの表</h2>
-        <table class="table table-striped table-bordered" id="sortableTable">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col" onclick="sortTable()">ID</th>
-                    <th scope="col">カテゴリー</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>カテゴリA</td>
-                </tr>
-                <tr>
-                    <td>A</td>
-                    <td>カテゴリB</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>カテゴリC</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <h1>Welcome, <span id="username"></span></h1>
+    <button id="logoutButton">Logout</button>
 
-    <!-- Bootstrap JSと依存するPopper.js、jQueryをインクルード -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        let originalOrder = [];
-        let isOriginalOrder = true;
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const rows = document.querySelectorAll("#sortableTable tbody tr");
-            rows.forEach(row => originalOrder.push(row));
-        });
-
-        function sortTable() {
-            const table = document.getElementById("sortableTable");
-            const tbody = table.tBodies[0];
-
-            if (isOriginalOrder) {
-                // 反転順序
-                [...originalOrder].reverse().forEach(row => tbody.appendChild(row));
-            } else {
-                // 元の順序
-                originalOrder.forEach(row => tbody.appendChild(row));
-            }
-
-            // 順序を切り替え
-            isOriginalOrder = !isOriginalOrder;
+        // トークンをローカルストレージに保存する関数
+        function saveTokenToLocalStorage(token) {
+            localStorage.setItem('id_token', token);
         }
+
+        // ローカルストレージからトークンを取得する関数
+        function getTokenFromLocalStorage() {
+            return localStorage.getItem('id_token');
+        }
+
+        // JWTトークンをデコードする関数
+        function decodeToken(token) {
+            return jwt_decode(token);
+        }
+
+        // ログアウト機能の実装
+        function logout() {
+            localStorage.removeItem('id_token');
+            // 必要に応じてログアウト後の処理を追加
+            window.location.href = '/login';  // ログインページにリダイレクト
+        }
+
+        // ページのロード時にトークンを取得してデコード
+        const idToken = getTokenFromLocalStorage();
+        if (idToken) {
+            const userAttributes = decodeToken(idToken);
+            console.log('User attributes:', userAttributes);
+
+            // 例として、ユーザ名を表示
+            document.getElementById('username').innerText = userAttributes.name;
+        } else {
+            console.log('No token found.');
+        }
+
+        // ログアウトボタンのクリックイベント
+        document.getElementById('logoutButton').addEventListener('click', logout);
+
+        // デモ目的で、仮のJWTトークンを保存 (実際にはログイン後にサーバから受け取る)
+        const demoToken = 'YOUR_JWT_ID_TOKEN';  // ここに実際のJWTトークンを使用
+        saveTokenToLocalStorage(demoToken);
     </script>
 </body>
 </html>
