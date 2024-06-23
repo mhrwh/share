@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Shepherd.js Tour Example</title>
+    <!-- Shepherd.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shepherd.js/8.1.0/css/shepherd.css">
+    <style>
+        .shepherd-modal-overlay-container {
+            z-index: 10000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Shepherd.js Tour Example</h1>
+        <button id="button1" class="btn btn-primary">ボタン1</button>
+        <button id="button2" class="btn btn-secondary">ボタン2</button>
+        <button id="button3" class="btn btn-success">ボタン3</button>
+    </div>
+
+    <!-- Shepherd.js JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shepherd.js/8.1.0/js/shepherd.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Shepherdツアーのインスタンスを作成
+            const tour = new Shepherd.Tour({
+                useModalOverlay: true,
+                defaultStepOptions: {
+                    cancelIcon: {
+                        enabled: true
+                    },
+                    classes: 'shepherd-theme-arrows',
+                    scrollTo: { behavior: 'smooth', block: 'center' }
+                }
+            });
+
+            // ツアーステップの定義
+            tour.addStep({
+                id: 'step1',
+                text: 'これはボタン1です。クリックしてみてください。',
+                attachTo: {
+                    element: '#button1',
+                    on: 'bottom'
+                }
+            });
+
+            tour.addStep({
+                id: 'step2',
+                text: 'これはボタン2です。こちらもクリックしてみてください。',
+                attachTo: {
+                    element: '#button2',
+                    on: 'bottom'
+                }
+            });
+
+            tour.addStep({
+                id: 'step3',
+                text: '最後に、これはボタン3です。',
+                attachTo: {
+                    element: '#button3',
+                    on: 'bottom'
+                }
+            });
+
+            // 画面のどこをクリックしても次のステップに進む
+            document.addEventListener('click', function() {
+                if (tour.isActive()) {
+                    tour.next();
+                }
+            });
+
+            // ツアーが終了したときの処理
+            tour.on('complete', function() {
+                localStorage.setItem('tourCompleted', 'true');
+            });
+
+            // ツアーがキャンセルされたときの処理
+            tour.on('cancel', function() {
+                localStorage.setItem('tourCompleted', 'true');
+            });
+
+            // ツアーの進行状況を確認し、必要に応じてツアーを開始
+            if (!localStorage.getItem('tourCompleted')) {
+                tour.start();
+            }
+        });
+    </script>
+</body>
+</html>
