@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload and Recognize Image</title>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.963.0.min.js"></script>
+</head>
+<body>
+    <input type="file" accept="image/*" capture="camera" id="captureInput">
+    <br>
+    <img id="preview" alt="Image Preview" style="display:none;">
+    <br>
+    <button id="uploadButton">Upload Image</button>
+
+    <script>
+        AWS.config.update({
+            region: 'YOUR_REGION', // 例: 'us-east-1'
+            credentials: new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: 'YOUR_IDENTITY_POOL_ID', // 例: 'us-east-1:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+            })
+        });
+
+        const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+
+        let file;
+
+        document.getElementById('captureInput').addEventListener('change', function(event) {
+            file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('preview');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('uploadButton').addEventListener('click', function() {
+            if (file) {
+                const fileName = `photos/${Date.now()}_${file.name}`;
+                const params = {
+                    Bucket: 'YOUR_BUCKET_NAME',
+                    Key: fileName,
+                    Body: file,
+                    ContentType: file.type
+                };
+
+                s3.upload(params, function(err, data) {
+                    if (err) {
+                        console.log('Error uploading image:', err);
+                    } else {
+                        console.log('Successfully uploaded image to S3:', data.Location);
+
+                        fetch('YOUR_API_ENDPOINT', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ imageUrl: data.Location })
+                        })
+                        .then(response => response.json())
+                        .then(result => {
+                            console.log('Success:', result);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }
+                });
+            } else {
+                alert('No image captured!');
+            }
+        });
+    </script>
+</body>
+</html>
