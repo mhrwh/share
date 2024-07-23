@@ -14,15 +14,19 @@
         .container {
             margin-top: 50px;
         }
-        .order-complete-card {
+        .order-complete-box {
             border: 1px solid #dee2e6;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            padding: 20px;
             background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .card-header {
+        .order-complete-header {
             background-color: #007bff;
             color: #fff;
+            padding: 10px;
+            border-radius: 8px 8px 0 0;
+            text-align: center;
             font-size: 1.5em;
             font-weight: bold;
         }
@@ -37,16 +41,19 @@
             background-color: #cc7a00;
             border-color: #cc7a00;
         }
+        .btn-secondary {
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="card order-complete-card">
-            <div class="card-header text-center">
+        <div class="order-complete-box">
+            <div class="order-complete-header">
                 注文完了
             </div>
-            <div class="card-body">
-                <p class="card-text text-center">ご注文ありがとうございました。以下の内容で注文が完了しました。</p>
+            <div class="order-complete-body">
+                <p class="text-center">ご注文ありがとうございました。以下の内容で注文が完了しました。</p>
                 <dl class="row order-details">
                     <dt class="col-sm-4">注文ID:</dt>
                     <dd class="col-sm-8">${order.order_id}</dd>
