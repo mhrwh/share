@@ -1,0 +1,53 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>注文完了</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .order-details dt {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">注文完了</h1>
+            </div>
+            <div class="card-body">
+                <p class="card-text">ご注文ありがとうございました。以下の内容で注文が完了しました。</p>
+                <dl class="row order-details">
+                    <dt class="col-sm-4">注文ID:</dt>
+                    <dd class="col-sm-8">${order.order_id}</dd>
+
+                    <dt class="col-sm-4">ユーザーID:</dt>
+                    <dd class="col-sm-8">${order.user_id}</dd>
+
+                    <dt class="col-sm-4">支払方法:</dt>
+                    <dd class="col-sm-8">${order.payment_method}</dd>
+
+                    <dt class="col-sm-4">注文日:</dt>
+                    <dd class="col-sm-8">${order.order_date}</dd>
+                </dl>
+                <a href="home.jsp" class="btn btn-primary">ホームに戻る</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
