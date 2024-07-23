@@ -14,62 +14,34 @@
         .container {
             margin-top: 50px;
         }
-        .order-complete-header {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .order-details {
-            background-color: #fff;
-            padding: 20px;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* カードに影を付ける */
         }
         .order-details dt {
             font-weight: bold;
-        }
-        .btn-primary {
-            background-color: #ff9900;
-            border-color: #ff9900;
-        }
-        .btn-primary:hover {
-            background-color: #cc7a00;
-            border-color: #cc7a00;
-        }
-        .btn-secondary {
-            margin-left: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="order-complete-header">
-            注文完了
-        </div>
-        <div class="order-details">
-            <p class="text-center">ご注文ありがとうございました。以下の内容で注文が完了しました。</p>
-            <dl class="row">
-                <dt class="col-sm-4">注文ID:</dt>
-                <dd class="col-sm-8">${order.order_id}</dd>
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title">注文完了</h1>
+                <p class="card-text">ご注文ありがとうございました。以下の内容で注文が完了しました。</p>
+                <dl class="row order-details">
+                    <dt class="col-sm-4">注文ID:</dt>
+                    <dd class="col-sm-8">${order.order_id}</dd>
 
-                <dt class="col-sm-4">ユーザーID:</dt>
-                <dd class="col-sm-8">${order.user_id}</dd>
+                    <dt class="col-sm-4">ユーザーID:</dt>
+                    <dd class="col-sm-8">${order.user_id}</dd>
 
-                <dt class="col-sm-4">支払方法:</dt>
-                <dd class="col-sm-8">${order.payment_method}</dd>
+                    <dt class="col-sm-4">支払方法:</dt>
+                    <dd class="col-sm-8">${order.payment_method}</dd>
 
-                <dt class="col-sm-4">注文日:</dt>
-                <dd class="col-sm-8">${order.order_date}</dd>
-            </dl>
-            <div class="text-center">
+                    <dt class="col-sm-4">注文日:</dt>
+                    <dd class="col-sm-8">${order.order_date}</dd>
+                </dl>
                 <a href="home.jsp" class="btn btn-primary">ホームに戻る</a>
-                <a href="orderHistory.jsp" class="btn btn-secondary">注文履歴を見る</a>
             </div>
         </div>
     </div>
