@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.util.*, java.text.SimpleDateFormat" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -40,6 +41,21 @@
 
                     <dt class="col-sm-4">注文日:</dt>
                     <dd class="col-sm-8">${order.order_date}</dd>
+
+                    <dt class="col-sm-4">お届け予定日:</dt>
+                    <dd class="col-sm-8">
+                        <%
+                            // 現在の日付を取得
+                            Calendar calendar = Calendar.getInstance();
+                            // 翌日の日付を設定
+                            calendar.add(Calendar.DAY_OF_MONTH, 1);
+                            // 日付フォーマットの指定
+                            SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日");
+                            // フォーマットされた日付を取得
+                            String tomorrowDate = sdf.format(calendar.getTime());
+                            out.print(tomorrowDate);
+                        %>
+                    </dd>
                 </dl>
                 <a href="home.jsp" class="btn btn-primary">ホームに戻る</a>
             </div>
