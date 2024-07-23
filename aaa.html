@@ -14,19 +14,39 @@
         .container {
             margin-top: 50px;
         }
+        .order-complete-card {
+            border: 1px solid #dee2e6;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            background-color: #fff;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
         .order-details dt {
             font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #ff9900;
+            border-color: #ff9900;
+        }
+        .btn-primary:hover {
+            background-color: #cc7a00;
+            border-color: #cc7a00;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <h1 class="card-title">注文完了</h1>
+        <div class="card order-complete-card">
+            <div class="card-header text-center">
+                注文完了
             </div>
             <div class="card-body">
-                <p class="card-text">ご注文ありがとうございました。以下の内容で注文が完了しました。</p>
+                <p class="card-text text-center">ご注文ありがとうございました。以下の内容で注文が完了しました。</p>
                 <dl class="row order-details">
                     <dt class="col-sm-4">注文ID:</dt>
                     <dd class="col-sm-8">${order.order_id}</dd>
@@ -40,7 +60,10 @@
                     <dt class="col-sm-4">注文日:</dt>
                     <dd class="col-sm-8">${order.order_date}</dd>
                 </dl>
-                <a href="home.jsp" class="btn btn-primary">ホームに戻る</a>
+                <div class="text-center">
+                    <a href="home.jsp" class="btn btn-primary">ホームに戻る</a>
+                    <a href="orderHistory.jsp" class="btn btn-secondary">注文履歴を見る</a>
+                </div>
             </div>
         </div>
     </div>
